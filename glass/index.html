@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Glass</title>
+    </head>
+    <body>
+        <p id="glass_text">TEST</p>
+        <script>
+            fetch('http://localhost:3000', {
+                method: 'GET',
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Content-Type': 'text/plain' 
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('glass_text').innerText = data.text;
+            });
+                    
+        </script>
+    </body>
+</html>
