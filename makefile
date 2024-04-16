@@ -2,30 +2,48 @@
 
 # Define variables
 BUILD_DIR := $(if $(BUILD),$(BUILD),out)
-MARKDOWN_FILES := $(wildcard *.md) $(wildcard */*.md)
-# MARKDOWN_FILES := $(wildcard */*.md)
-HTML_FILES := $(patsubst %.md,$(BUILD_DIR)/%.html,$(MARKDOWN_FILES))
-HEADER_FILE := build/header.html  # Adjust this to the actual path of your header file
+MD_FILES := $(wildcard *.md) $(wildcard */*.md)
+HTML_FILES := $(patsubst %.md,$(BUILD_DIR)/%.html,$(MD_FILES))
+HEADER_FILE := build/header.html
 HGEN_EXECUTABLE := build/hgen
+JS_FILES := $(wildcard *.js)
+CSS_FILES := $(wildcard *.css)
+PY_FILES := $(wildcard *.py)
+PNG_FILES := $(wildcard *.png)
 
-# Rule to build HTML files from Markdown
+# Phony targets for handling various file types
+.PHONY: md js css py html generate clean
+
 $(BUILD_DIR)/%.html: %.md $(HGEN_EXECUTABLE)
 	@mkdir -p $(@D)
 	$(HGEN_EXECUTABLE) $< $@ $(HEADER_FILE)
 
-# Rule to build all HTML files
-.PHONY: all
-all: $(HTML_FILES)
+# Copy JS files
+$(BUILD_DIR)/%.js: %.js | $(BUILD_DIR)
+	cp $< $@
 
-# Rule to create the build directory
+# Copy CSS files
+$(BUILD_DIR)/%.css: %.css | $(BUILD_DIR)
+	cp $< $@
+
+# Copy PY files
+$(BUILD_DIR)/%.py: %.py | $(BUILD_DIR)
+	cp $< $@
+
+# Copy PNG files
+$(BUILD_DIR)/%.png: %.png | $(BUILD_DIR)
+	cp $< $@
+
+# Remove unnecessary files
+clean:
+	rm -rf $(BUILD_DIR) $(JS_FILES) $(CSS_FILES) $(PY_FILES)
+
+# Generate HTML files
+all: $(HTML_FILES) $(addprefix $(BUILD_DIR)/, $(JS_FILES)) $(addprefix $(BUILD_DIR)/, $(CSS_FILES)) $(addprefix $(BUILD_DIR)/, $(PY_FILES)) $(addprefix $(BUILD_DIR)/, $(PNG_FILES))
+
+# Create build directory
 build:
 	mkdir -p build
-
-# remove all HTML files to force rebuild
-generate: clean all
-
-clean:
-	rm -rf $(BUILD_DIR)
 
 # Default rule
 .DEFAULT_GOAL := all
