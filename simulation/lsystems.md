@@ -39,5 +39,4 @@ function l_system(current, rules, generations) {
 - [Wikipedia](https://en.wikipedia.org/wiki/L-system)
 - [Jordan Santell](https://jsantell.com/l-systems/)
 - [p5.min.js](https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js)
-- [runhighlight.js](/runhighlight.js)
 - [lsystems.js](/simulation/lsystems.js)

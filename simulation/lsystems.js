@@ -1,7 +1,7 @@
 // creating an l-system in p5.js
 
-let width = window.innerWidth * .35
-let height = window.innerHeight * .35
+let width = window.innerWidth * .60
+let height = window.innerHeight * .40
 let angle = 30
 
 let rules = {
