@@ -12,9 +12,13 @@ class Boid {
         this.vx = random(-1, 1)
         this.vy = random(-1, 1)
         this.angle = random(360)
+
+        this.close_dx = 0
+        this.close_dy = 0
     }
 
     move() {
+        
     }
 
     show() {

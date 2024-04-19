@@ -5,7 +5,7 @@ Boids is an artificial life program simulating flocking that was created by Crai
 2. **Alignment**: Align with the average heading of local flockmates
 3. **Cohesion**: Move toward the average position of local flockmates
 
-
+Each boid has access to the rest of the flock's position/velocity, but adjusts according to flockmates in a neighborhood around it. The neighborhood is defined by a distance and angle from the boid's position and heading.
 
 ::boids
 

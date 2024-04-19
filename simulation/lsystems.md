@@ -1,5 +1,4 @@
 # L-Systems
-
 L-systems, or Lindenmayer systems, are a way of simulating bacteria, plant, and fractal growth. 
 This is done using recursive string rewriting and a way to render strings to a 2D or 3D space, which can be used to create multiple general rulesets.
 
