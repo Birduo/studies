@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/atelier-estuary.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</head>
+<body>
+<h1>Boids</h1>
+Boids is an artificial life program simulating flocking that was created by Craig Reynolds in 1986. Each individual boid moves according to three "steering behaviors":<br>
+<br>
+1. <b>Separation</b>: Avoid crowding local flockmates<br>
+2. <b>Alignment</b>: Align with the average heading of local flockmates<br>
+3. <b>Cohesion</b>: Move toward the average position of local flockmates<br>
+<br>
+Each boid has access to the rest of the flock's position/velocity, but adjusts according to flockmates in a neighborhood around it. The neighborhood is defined by a distance and angle from the boid's position and heading.<br>
+<br>
+<div id="boids"></div><br>
+<br>
+<h3>Sources</h3>
+<ul>
+<li><a href="http://www.red3d.com/cwr/boids/">Craig Reynolds</a></li>
+<li><a href="http://www.kfish.org/boids/pseudocode.html">Boids Pseudocode</a></li>
+<li><a href="https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html">Boids Algorithm</a></li>
+<li><a href="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js">p5.min.js</a><script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js"></script></li>
+<li><a href="/simulation/boids.js">boids.js</a><script src="/simulation/boids.js"></script></li>
+</ul>
+<br>
+</body>
+</html>

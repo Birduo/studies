@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/atelier-estuary.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+</head>
+<body>
+<h1>L-Systems</h1>
+L-systems, or Lindenmayer systems, are a way of simulating bacteria, plant, and fractal growth. <br>
+This is done using recursive string rewriting and a way to render strings to a 2D or 3D space, which can be used to create multiple general rulesets.<br>
+<br>
+Recursive string rewriting is used in L-systems to generate the "growth" of the preferred organism. <br>
+This is done using a set of rules that are applied to modify a given string recursively. <br>
+Consider the following L-system: <br>
+<pre><code class="nohighlight">F -> F, F+F-F-F+F, F-F+F+F-F, FF+[+F-F-F]-[-F+F+F], F[+F]F[-F]F, FF-[-F+F+F]+[+F-F-F]
+</code></pre>
+<br>
+This ruleset is used to generate a plant-like structure in 2D space.<br>
+Note how this is done on the whole string, and not just the end portion of the string.<br>
+<br>
+<div id="lsystem"></div><br>
+<br>
+This system was built in a string format with this code:<br>
+<pre><code class="language-javascript">function l_system(current, rules, generations) {
+    let next = '';
+    for (let i = 0; i < generations; i++) {
+        for (let j = 0; j < current.length; j++) {
+            let c = current[j]
+            if (rules[c]) {
+                next += random(rules[c])
+            } else {
+                next += c
+            }
+        }
+        current = next
+        next = ''
+    }
+
+    return current
+}
+</code></pre>
+<script>function l_system(current, rules, generations) {
+    let next = '';
+    for (let i = 0; i < generations; i++) {
+        for (let j = 0; j < current.length; j++) {
+            let c = current[j]
+            if (rules[c]) {
+                next += random(rules[c])
+            } else {
+                next += c
+            }
+        }
+        current = next
+        next = ''
+    }
+
+    return current
+}
+</script><br>
+<br>
+<h3>Sources</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/L-system">Wikipedia</a></li>
+<li><a href="https://jsantell.com/l-systems/">Jordan Santell</a></li>
+<li><a href="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js">p5.min.js</a><script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js"></script></li>
+<li><a href="/simulation/lsystems.js">lsystems.js</a><script src="/simulation/lsystems.js"></script></li>
+</ul>
+<br>
+</body>
+</html>

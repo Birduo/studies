@@ -1,0 +1,27 @@
+body {
+    background-color: #221d23;
+    color: #d8cbc7;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    margin: 0 auto;
+    text-align: left;
+    width: 60%;
+}
+
+pre {
+    background-color : #221d23;
+    margin: 1em 0;
+    font-size: 1.1em;
+}
+
+code {
+    font-size: 1.1em;
+}
+
+a:link {
+    color: #70ae6e;
+}
+
+a:visited {
+    color: #285943;
+}
