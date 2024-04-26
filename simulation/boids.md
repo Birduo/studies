@@ -105,3 +105,7 @@ separate(others) {
 ### Navigation
 - [Home](/README.md)
 - [Simulation](/simulation)
+
+```js
+document.title = "Boids";
+```
