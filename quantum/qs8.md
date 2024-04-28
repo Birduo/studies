@@ -2,6 +2,8 @@
 
 qs8 is a quantum statevector simulator built in Python for small-scale projects. It was mostly an exercise in my own abilities in how the domains of linear algebra and quantum computing overlap, and only uses the `numpy` module as its core dependency.
 
+In the future, I might adapt this project to JS for browser-based quantum simulation projects.
+
 ## How does it work?
 Quantum circuits are organized as a list of gates, where each entry is a timestep column. Index 0 is `t0`, index 1 is `t1`, etc. You can interpret the circuit by using matrix multiplication to evolve the statevector column by column, or build the entire circuit into a single unitary to then execute in one step. The single-stepping feature of this makes it easier to debug and figure out problems with state. 
 
