@@ -2,7 +2,8 @@
 BUILD_DIR := $(if $(BUILD),$(BUILD),out)
 # MD_FILES := $(shell find . -name '*.md' | sed 's|./||')
 HEADER_FILE := build/header.html
-HGEN_EXECUTABLE := build/hgen
+# HGEN_EXECUTABLE := build/hgen
+HGEN_EXECUTABLE := build/exgen
 MD_FILES := $(shell find . -name '*.md' ! -path "./$(BUILD_DIR)/*" | sed 's|./||')
 HTML_FILES := $(patsubst %.md,$(BUILD_DIR)/%.html,$(MD_FILES))
 JS_FILES := $(shell find . -name '*.js' ! -path "./$(BUILD_DIR)/*" | sed 's|./||')

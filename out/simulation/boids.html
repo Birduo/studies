@@ -1,172 +1,212 @@
-<!doctype html>
-<html>
-<head>
 <title>Birduo Labs</title>
 <link rel="stylesheet" href="/styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/atelier-estuary.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script>hljs.highlightAll();</script>
-</head>
-<body>
-<h1>Boids</h1>
-<div id="boids"></div><br><br><h2>About</h2>
-Boids is an artificial life program simulating flocking that was created by Craig Reynolds in 1986. Each boid has access to the rest of the flock's position/velocity, but adjusts according to flockmates in a neighborhood around it. The neighborhood is defined by a distance and angle from the boid's position and heading.<br><br>The <code>Boid</code> class contains the following traits:<br>- <code>pos</code>: position vector (can get heading from <code>p5.Vector.heading()</code>)<br>- <code>vel</code>: velocity vector<br>- <code>accel</code>: acceleration vector<br>- <code>maxVel</code>: maximum velocity<br>- <code>separation_distance</code>: distance from boid to consider flockmates<br>- <code>angle</code>: angle of the boid's vision from their heading<br><br><h2>Steering</h2>
-Each individual boid moves according to three "steering behaviors":<br><br>1. <b>Alignment</b>: Align with the average heading of local flockmates<br><pre><code class="language-javascript">function align(others) {
-    let steering = createVector()
-    let total = 0
-    for (let other of others) {
-        let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
-
-        // add to steering if in neighborhood
-        if (other != this && d < this.angle) {
-            steering.add(other.vel)
-            total++
-        }
-    }
-    
-    // align with the average heading if flockmates in neighborhood
-    if (total > 0) {
-        steering.div(total)
-        steering.setMag(this.maxVel)
-        steering.sub(this.vel)
-        steering.limit(this.maxForce)
-    }
-
-    return steering
-}
-</code></pre>
-<script>function align(others) {
-    let steering = createVector()
-    let total = 0
-    for (let other of others) {
-        let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
-
-        // add to steering if in neighborhood
-        if (other != this && d < this.angle) {
-            steering.add(other.vel)
-            total++
-        }
-    }
-    
-    // align with the average heading if flockmates in neighborhood
-    if (total > 0) {
-        steering.div(total)
-        steering.setMag(this.maxVel)
-        steering.sub(this.vel)
-        steering.limit(this.maxForce)
-    }
-
-    return steering
-}
-</script><br>2. <b>Cohesion</b>: Move toward the average position of local flockmates<br><pre><code class="language-javascript">function cohere(others) {
-    let steering = createVector()
-    let total = 0
-    for (let other of others) {
-        // get distance between this boid and the other
-        let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
-        if (other != this && d < this.angle) {
-            steering.add(other.pos)
-            total++
-        }
-    }
-
-    // move towards the average position of flockmates in neighborhood
-    if (total > 0) {
-        steering.div(total)
-        steering.sub(this.pos)
-        steering.setMag(this.maxVel)
-        steering.sub(this.vel)
-        steering.limit(this.maxForce)
-    }
-
-    return steering
-}
-</code></pre>
-<script>function cohere(others) {
-    let steering = createVector()
-    let total = 0
-    for (let other of others) {
-        // get distance between this boid and the other
-        let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
-        if (other != this && d < this.angle) {
-            steering.add(other.pos)
-            total++
-        }
-    }
-
-    // move towards the average position of flockmates in neighborhood
-    if (total > 0) {
-        steering.div(total)
-        steering.sub(this.pos)
-        steering.setMag(this.maxVel)
-        steering.sub(this.vel)
-        steering.limit(this.maxForce)
-    }
-
-    return steering
-}
-</script><br>3. <b>Separation</b>: Avoid crowding local flockmates<br><pre><code class="language-javascript">separate(others) {
-    let steering = createVector()
-    let total = 0
-    for (let other of others) {
-        let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
-        if (other != this && d < separation_distance) {
-            // track the difference between the two positions
-            let diff = p5.Vector.sub(this.pos, other.pos)
-            diff.div(d)
-            steering.add(diff)
-            total++
-        }
-    }
-
-    // move away from nearby flockmates
-    if (total > 0) {
-        steering.div(total)
-        steering.setMag(this.maxVel)
-        steering.sub(this.vel)
-        steering.limit(this.maxForce)
-    }
-
-    return steering
-}
-</code></pre>
-<script>separate(others) {
-    let steering = createVector()
-    let total = 0
-    for (let other of others) {
-        let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
-        if (other != this && d < separation_distance) {
-            // track the difference between the two positions
-            let diff = p5.Vector.sub(this.pos, other.pos)
-            diff.div(d)
-            steering.add(diff)
-            total++
-        }
-    }
-
-    // move away from nearby flockmates
-    if (total > 0) {
-        steering.div(total)
-        steering.setMag(this.maxVel)
-        steering.sub(this.vel)
-        steering.limit(this.maxForce)
-    }
-
-    return steering
-}
-</script><br><br><h3>Sources</h3>
+<h1>
+Boids</h1>
+<div id="boids">
+</div>
+<h2>
+About</h2>
+<p>
+Boids is an artificial life program simulating flocking that was created by Craig Reynolds in 1986. Each boid has access to the rest of the flock&#39;s position/velocity, but adjusts according to flockmates in a neighborhood around it. The neighborhood is defined by a distance and angle from the boid&#39;s position and heading.</p>
+<p>
+The <code class="inline">Boid</code> class contains the following traits:</p>
 <ul>
-<li><a href="http://www.red3d.com/cwr/boids/">Craig Reynolds</a></li>
-<li><a href="http://www.kfish.org/boids/pseudocode.html">Boids Pseudocode</a></li>
-<li><a href="https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html">Boids Algorithm</a></li>
-<li><a href="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js">p5.min.js</a><script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js"></script></li>
-<li><a href="/simulation/boids.js">boids.js</a><script src="/simulation/boids.js"></script></li>
+  <li>
+<code class="inline">pos</code>: position vector (can get heading from <code class="inline">p5.Vector.heading()</code>)  </li>
+  <li>
+<code class="inline">vel</code>: velocity vector  </li>
+  <li>
+<code class="inline">accel</code>: acceleration vector  </li>
+  <li>
+<code class="inline">maxVel</code>: maximum velocity  </li>
+  <li>
+<code class="inline">separation_distance</code>: distance from boid to consider flockmates  </li>
+  <li>
+<code class="inline">angle</code>: angle of the boid&#39;s vision from their heading  </li>
 </ul>
-<br><h3>Navigation</h3>
+<h2>
+Steering</h2>
+<p>
+Each individual boid moves according to three &quot;steering behaviors&quot;:</p>
+<ol>
+  <li>
+<strong>Alignment</strong>: Align with the average heading of local flockmates    <pre><code class="javascript">function align(others) {
+ let steering = createVector()
+ let total = 0
+ for (let other of others) {
+     let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
+
+     // add to steering if in neighborhood
+     if (other != this &amp;&amp; d &lt; this.angle) {
+         steering.add(other.vel)
+         total++
+     }
+ }
+ 
+ // align with the average heading if flockmates in neighborhood
+ if (total &gt; 0) {
+     steering.div(total)
+     steering.setMag(this.maxVel)
+     steering.sub(this.vel)
+     steering.limit(this.maxForce)
+ }
+
+ return steering
+}</code>    <script>
+      function align(others) {
+ let steering = createVector()
+ let total = 0
+ for (let other of others) {
+     let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
+
+     // add to steering if in neighborhood
+     if (other != this && d < this.angle) {
+         steering.add(other.vel)
+         total++
+     }
+ }
+ 
+ // align with the average heading if flockmates in neighborhood
+ if (total > 0) {
+     steering.div(total)
+     steering.setMag(this.maxVel)
+     steering.sub(this.vel)
+     steering.limit(this.maxForce)
+ }
+
+ return steering
+}    </script>
+</pre>
+  </li>
+  <li>
+<strong>Cohesion</strong>: Move toward the average position of local flockmates    <pre><code class="javascript">function cohere(others) {
+ let steering = createVector()
+ let total = 0
+ for (let other of others) {
+     // get distance between this boid and the other
+     let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
+     if (other != this &amp;&amp; d &lt; this.angle) {
+         steering.add(other.pos)
+         total++
+     }
+ }
+
+ // move towards the average position of flockmates in neighborhood
+ if (total &gt; 0) {
+     steering.div(total)
+     steering.sub(this.pos)
+     steering.setMag(this.maxVel)
+     steering.sub(this.vel)
+     steering.limit(this.maxForce)
+ }
+
+ return steering
+}</code>    <script>
+      function cohere(others) {
+ let steering = createVector()
+ let total = 0
+ for (let other of others) {
+     // get distance between this boid and the other
+     let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
+     if (other != this && d < this.angle) {
+         steering.add(other.pos)
+         total++
+     }
+ }
+
+ // move towards the average position of flockmates in neighborhood
+ if (total > 0) {
+     steering.div(total)
+     steering.sub(this.pos)
+     steering.setMag(this.maxVel)
+     steering.sub(this.vel)
+     steering.limit(this.maxForce)
+ }
+
+ return steering
+}    </script>
+</pre>
+  </li>
+  <li>
+<strong>Separation</strong>: Avoid crowding local flockmates    <pre><code class="javascript">separate(others) {
+ let steering = createVector()
+ let total = 0
+ for (let other of others) {
+     let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
+     if (other != this &amp;&amp; d &lt; separation_distance) {
+         // track the difference between the two positions
+         let diff = p5.Vector.sub(this.pos, other.pos)
+         diff.div(d)
+         steering.add(diff)
+         total++
+     }
+ }
+
+ // move away from nearby flockmates
+ if (total &gt; 0) {
+     steering.div(total)
+     steering.setMag(this.maxVel)
+     steering.sub(this.vel)
+     steering.limit(this.maxForce)
+ }
+
+ return steering
+}</code>    <script>
+      separate(others) {
+ let steering = createVector()
+ let total = 0
+ for (let other of others) {
+     let d = dist(this.pos.x, this.pos.y, other.pos.x, other.pos.y)
+     if (other != this && d < separation_distance) {
+         // track the difference between the two positions
+         let diff = p5.Vector.sub(this.pos, other.pos)
+         diff.div(d)
+         steering.add(diff)
+         total++
+     }
+ }
+
+ // move away from nearby flockmates
+ if (total > 0) {
+     steering.div(total)
+     steering.setMag(this.maxVel)
+     steering.sub(this.vel)
+     steering.limit(this.maxForce)
+ }
+
+ return steering
+}    </script>
+</pre>
+  </li>
+</ol>
+<h3>
+Sources</h3>
 <ul>
-<li><a href="/README.md">Home</a></li>
-<li><a href="/simulation">Simulation</a></li>
+  <li>
+<a href="http://www.red3d.com/cwr/boids/">Craig Reynolds</a>  </li>
+  <li>
+<a href="http://www.kfish.org/boids/pseudocode.html">Boids Pseudocode</a>  </li>
+  <li>
+<a href="https://vanhunteradams.com/Pico/Animal_Movement/Boids-algorithm.html">Boids Algorithm</a>  </li>
+  <li>
+<a href="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js">p5.min.js    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.min.js">
+    </script>
+</a>  </li>
+  <li>
+<a href="/simulation/boids.js">boids.js    <script src="/simulation/boids.js">
+    </script>
+</a>  </li>
 </ul>
-<br><script>document.title = "Boids";
-</script><br><br></body>
-</html>
+<h3>
+Navigation</h3>
+<ul>
+  <li>
+<a href="/README.md">Home</a>  </li>
+  <li>
+<a href="/simulation">Simulation</a>  </li>
+</ul>
+<script>
+  document.title = "Boids";</script>
