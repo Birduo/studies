@@ -25,3 +25,17 @@ a:link {
 a:visited {
     color: #285943;
 }
+
+/* Mobile styles */
+@media (max-width: 600px) {
+    body {
+        font-size: 1.2em;
+        width: 90%;
+        line-height: 1.5;
+    }
+
+    pre, code {
+        font-size: 1.2em;
+    }
+}
+
