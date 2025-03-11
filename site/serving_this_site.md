@@ -22,7 +22,7 @@ And potentially more on language learning, as learning Mandarin has taught me qu
 
 ### Navigation
 - [Home](/)
-- [Life](/life.md)
+- [Site](/site.md)
 
 ```js
 document.title = "Serving This Site"

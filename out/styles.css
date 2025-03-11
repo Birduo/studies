@@ -12,10 +12,29 @@ pre {
     background-color : #221d23;
     margin: 0 auto;
     font-size: 1.1em;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 code {
     font-size: 1.1em;
+}
+
+h1 {
+    color: #70ae6e;
+    font-size: 2em;
+    margin: 0.5em 0;
+}
+
+h2 {
+    color: #70ae6e;
+    font-size: 1.5em;
+    margin: 0.5em 0;
+}
+
+h3 {
+    color: #70ae6e;
+    font-size: 1.2em;
+    margin: 0.5em 0;
 }
 
 a:link {

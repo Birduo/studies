@@ -1,0 +1,61 @@
+<title>Birduo Labs</title>
+<link rel="stylesheet" href="/styles.css">
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/atelier-estuary.min.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/base16/tomorrow-night.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<h1>
+Exgen</h1>
+<p>
+Statically generating this site with Exgen, successor to HGen.</p>
+<p>
+As I&#39;ve discussed before, I&#39;ve been using <a href="https://github.com/Birduo/hgen">hgen</a> to generate this site.
+This is great for compiling <em>simple</em> markdown files, but it&#39;s not very great at more complex markdown files.</p>
+<p>
+Aligning with this problem, I&#39;ve been wanting to get into using Elixir as a programming language for a while, and I recently found <a href="https://hex.pm/packages/earmark">Earmark</a> on Hex, the package repo for all BEAM languages (including Elixir).</p>
+<p>
+Earmark is a markdown parser written in Elixir, more importantly, it&#39;s written in two stages. The first stage parses the markdown into an Abstract Syntax Tree (AST), and the second stage converts the AST into HTML. This makes my life much easier, as I can write my own transformations over the already-created AST. Then, I can take the modified AST and compile it to HTML, all using Earmark&#39;s builtin functions.</p>
+<h3>
+Features</h3>
+<ul>
+  <li>
+<code class="inline">js</code> code blocks become embedded as <code class="inline">&lt;script&gt;</code> tags  </li>
+  <li>
+<code class="inline">javascript</code> code blocks stay as both code blocks and script tags  </li>
+  <li>
+<code class="inline">::&lt;name&gt;</code> becomes a <code class="inline">div</code> tag with <code class="inline">id=&lt;name&gt;</code>  </li>
+  <li>
+<code class="inline">&lt;a&gt;</code> tags, if <code class="inline">css</code> or <code class="inline">js</code> will directly add the css/js code  </li>
+  <li>
+by extension, pure links are no longer allowed  </li>
+</ul>
+<h3>
+Testing</h3>
+<p>
+I&#39;ve had a great time testing with Mix, and I can create inline tests in module docs such as:</p>
+<pre><code class="elixir">@doc &quot;&quot;&quot;
+  iex&gt; [ &quot;```js&quot;, &quot;console.log(&#39;test&#39;)&quot;, &quot;```&quot; ] |&gt; Exgen.as_ast()
+  [{&quot;script&quot;, [], [&quot;console.log(&#39;test&#39;)&quot;], %{verbatim: true}}]
+
+  iex&gt; [ &quot;::name&quot; ] |&gt; Exgen.as_ast()
+  [{&quot;canvas&quot;, [{&quot;id&quot;, &quot;name&quot;}], [], %{}}]
+&quot;&quot;&quot;</code></pre>
+<p>
+Or, I can test with an actual function inside my ExgenTest module:</p>
+<pre><code class="elixir">test &quot;javascript code blocks&quot; do
+  js_block = [&quot;```js&quot;, &quot;console.log(&#39;test&#39;)&quot;, &quot;```&quot;]
+  ast = Exgen.as_ast(js_block)
+  assert ast == 
+    [{&quot;script&quot;, [], [&quot;console.log(&#39;test&#39;)&quot;], %{verbatim: true}}]
+end</code></pre>
+<h3>
+Navigation</h3>
+<ul>
+  <li>
+<a href="/">Home</a>  </li>
+  <li>
+<a href="/site.md">Site</a>  </li>
+</ul>
+<script>
+  document.title = "Exgen"</script>
