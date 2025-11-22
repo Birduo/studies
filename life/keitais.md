@@ -13,7 +13,7 @@ Most people who discuss keitais come from r/dumbphones, and the reasons become c
 - Poor camera quality (8 MP)
 
 Now, many of these can be quoted as "limitations" when imagining using the phone as you would a smartphone.
-However, I believe that an alternative perspective to the limitations is what r/dumphones users are taking. 
+However, I believe that an alternative perspective to the limitations is what r/dumbphones users are taking. 
 The phone is **meant** to reduce screentime, and simplifying the experience with a phone like this begins to make more and more sense. 
 Increasing friction to do more complex tasks like opening TikTok or a browser is intentionally difficult to them.
 
